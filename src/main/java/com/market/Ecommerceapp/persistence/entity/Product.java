@@ -1,10 +1,13 @@
 package com.market.Ecommerceapp.persistence.entity;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "productos")
 public class Product {
@@ -24,7 +27,7 @@ public class Product {
     private String barcode;
 
     @Column(name = "precio_venta")
-    private Double sellPrice;
+    private BigDecimal sellPrice;
 
     @Column(name = "cantidad_stock")
     private Integer stock;
