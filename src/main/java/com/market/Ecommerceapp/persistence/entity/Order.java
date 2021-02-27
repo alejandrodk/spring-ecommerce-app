@@ -31,4 +31,8 @@ public class Order {
 
     @Column(name = "estado")
     private String status;
+
+    @ManyToOne
+    @JoinColumn(name = "id_cliente", insertable = false, updatable = false)
+    private Client client;
 }
