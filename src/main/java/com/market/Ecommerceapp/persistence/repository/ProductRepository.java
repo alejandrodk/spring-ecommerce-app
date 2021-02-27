@@ -2,11 +2,13 @@ package com.market.Ecommerceapp.persistence.repository;
 
 import com.market.Ecommerceapp.persistence.crud.ProductCrudRepository;
 import com.market.Ecommerceapp.persistence.entity.Product;
+import org.springframework.stereotype.Repository;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+@Repository
 public class ProductRepository {
     private ProductCrudRepository productCrudRepository;
 
