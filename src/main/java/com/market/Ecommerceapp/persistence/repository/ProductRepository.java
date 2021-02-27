@@ -22,4 +22,16 @@ public class ProductRepository {
         Optional<List<Product>> result = productCrudRepository.findByStockLessThanAndStatus(stock, status);
         return result.orElse(Collections.emptyList());
     }
+
+    public Optional<Product> getProduct(int productId) {
+        return productCrudRepository.findById(productId);
+    }
+
+    public Product createProduct(Product product) {
+        return productCrudRepository.save(product);
+    }
+
+    public void deleteProduct(int productId) {
+        productCrudRepository.deleteById(productId);
+    }
 }
