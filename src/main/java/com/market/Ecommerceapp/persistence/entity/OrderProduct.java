@@ -28,4 +28,12 @@ public class OrderProduct {
     private String status;
 
     private BigDecimal total;
+
+    @ManyToOne
+    @JoinColumn(name = "id_compra", insertable = false, updatable = false)
+    private Order order;
+
+    @ManyToOne
+    @JoinColumn(name = "id_producto", insertable = false, updatable = false)
+    private Product product;
 }
