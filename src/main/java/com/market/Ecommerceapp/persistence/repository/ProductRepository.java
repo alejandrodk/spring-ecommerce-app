@@ -1,39 +1,52 @@
 package com.market.Ecommerceapp.persistence.repository;
 
+import com.market.Ecommerceapp.domain.dal.ProductDAL;
+import com.market.Ecommerceapp.domain.repository.ProductRepositoryInterface;
 import com.market.Ecommerceapp.persistence.crud.ProductCrudRepository;
 import com.market.Ecommerceapp.persistence.entity.Product;
+import com.market.Ecommerceapp.persistence.mapper.ProductDalMapper;
 import org.springframework.stereotype.Repository;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 @Repository
-public class ProductRepository {
+public class ProductRepository implements ProductRepositoryInterface {
     private ProductCrudRepository productCrudRepository;
+    private ProductDalMapper mapper;
 
-    public List<Product> getAll() {
-        return (List<Product>) productCrudRepository.findAll();
+    @Override
+    public List<ProductDAL> getAll() {
+        List<Product> products = (List<Product>) productCrudRepository.findAll();
+        return mapper.toProductsDal(products);
     }
 
-    public List<Product> getByCategory(int categoryId) {
-        return productCrudRepository.findByCategoryIdOrderByNameAsc(categoryId);
+    @Override
+    public Optional<List<ProductDAL>> getByCategory(int categoryId) {
+        List<Product> products = productCrudRepository.findByCategoryIdOrderByNameAsc(categoryId);
+        return Optional.of(mapper.toProductsDal(products));
     }
 
-    public List<Product> getByStockAndStatus(int stock, boolean status) {
-        Optional<List<Product>> result = productCrudRepository.findByStockLessThanAndStatus(stock, status);
-        return result.orElse(Collections.emptyList());
+    @Override
+    public Optional<List<ProductDAL>> getScaseProducts(int stockQuantity) {
+        Optional<List<Product>> products = productCrudRepository.findByStockLessThanAndStatus(stockQuantity, true);
+        return products.map(prods -> mapper.toProductsDal(prods));
     }
 
-    public Optional<Product> getProduct(int productId) {
-        return productCrudRepository.findById(productId);
+    @Override
+    public Optional<ProductDAL> getProduct(int productId) {
+        Optional<Product> product = productCrudRepository.findById(productId);
+        return product.map(prod -> mapper.toProductDal(prod));
     }
 
-    public Product createProduct(Product product) {
-        return productCrudRepository.save(product);
+    @Override
+    public ProductDAL create(ProductDAL product) {
+        Product newProduct = mapper.toProduct(product);
+        return mapper.toProductDal(productCrudRepository.save(newProduct));
     }
 
-    public void deleteProduct(int productId) {
+    @Override
+    public void delete(int productId) {
         productCrudRepository.deleteById(productId);
     }
 }

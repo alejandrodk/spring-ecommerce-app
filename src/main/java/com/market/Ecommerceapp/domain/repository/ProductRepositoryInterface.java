@@ -5,7 +5,7 @@ import com.market.Ecommerceapp.domain.dal.ProductDAL;
 import java.util.List;
 import java.util.Optional;
 
-public interface ProductRepository {
+public interface ProductRepositoryInterface {
     List<ProductDAL> getAll();
     Optional<List<ProductDAL>> getByCategory(int categoryId);
     Optional<List<ProductDAL>> getScaseProducts(int stockQuantity);
