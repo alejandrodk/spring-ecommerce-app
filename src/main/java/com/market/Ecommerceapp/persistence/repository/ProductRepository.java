@@ -12,8 +12,13 @@ import java.util.Optional;
 
 @Repository
 public class ProductRepository implements ProductRepositoryInterface {
-    private ProductCrudRepository productCrudRepository;
-    private ProductDalMapper mapper;
+    private final ProductCrudRepository productCrudRepository;
+    private final ProductDalMapper mapper;
+
+    public ProductRepository(ProductCrudRepository productCrudRepository, ProductDalMapper mapper) {
+        this.productCrudRepository = productCrudRepository;
+        this.mapper = mapper;
+    }
 
     @Override
     public List<ProductDAL> getAll() {
@@ -30,13 +35,13 @@ public class ProductRepository implements ProductRepositoryInterface {
     @Override
     public Optional<List<ProductDAL>> getScaseProducts(int stockQuantity) {
         Optional<List<Product>> products = productCrudRepository.findByStockLessThanAndStatus(stockQuantity, true);
-        return products.map(prods -> mapper.toProductsDal(prods));
+        return products.map(mapper::toProductsDal);
     }
 
     @Override
     public Optional<ProductDAL> getProduct(int productId) {
         Optional<Product> product = productCrudRepository.findById(productId);
-        return product.map(prod -> mapper.toProductDal(prod));
+        return product.map(mapper::toProductDal);
     }
 
     @Override
