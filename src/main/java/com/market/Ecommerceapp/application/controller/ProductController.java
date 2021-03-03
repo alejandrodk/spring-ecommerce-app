@@ -2,8 +2,7 @@ package com.market.Ecommerceapp.application.controller;
 
 import com.market.Ecommerceapp.domain.dal.ProductDAL;
 import com.market.Ecommerceapp.domain.service.ProductService;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,23 +16,24 @@ public class ProductController {
         this.productService = productService;
     }
 
+    @GetMapping()
     public List<ProductDAL> getAll() {
         return productService.getAll();
     }
-
-    public Optional<ProductDAL> getOne(int productId) {
+    @GetMapping("/{id}")
+    public Optional<ProductDAL> getOne(@PathVariable("id") int productId) {
         return productService.getOne(productId);
     }
-
-    public Optional<List<ProductDAL>> getByCategory(int categoryId) {
+    @GetMapping("/category/{id}")
+    public Optional<List<ProductDAL>> getByCategory(@PathVariable("id") int categoryId) {
         return productService.getByCategory((categoryId));
     }
-
-    public ProductDAL create(ProductDAL product) {
+    @PostMapping()
+    public ProductDAL create(@RequestBody ProductDAL product) {
         return productService.create(product);
     }
-
-    public boolean delete(int productId) {
+    @DeleteMapping("/{id}")
+    public boolean delete(@PathVariable("id") int productId) {
         return productService.delete(productId);
     }
 }
