@@ -2,10 +2,11 @@ package com.market.Ecommerceapp.application.controller;
 
 import com.market.Ecommerceapp.domain.dal.ProductDAL;
 import com.market.Ecommerceapp.domain.service.ProductService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/products")
@@ -17,23 +18,28 @@ public class ProductController {
     }
 
     @GetMapping()
-    public List<ProductDAL> getAll() {
-        return productService.getAll();
+    public ResponseEntity<List<ProductDAL>> getAll() {
+        return new ResponseEntity<>(productService.getAll(), HttpStatus.OK);
     }
     @GetMapping("/{id}")
-    public Optional<ProductDAL> getOne(@PathVariable("id") int productId) {
-        return productService.getOne(productId);
+    public ResponseEntity<ProductDAL> getOne(@PathVariable("id") int productId) {
+        return productService.getOne(productId)
+                .map(product -> new ResponseEntity<>(product, HttpStatus.OK))
+                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
     @GetMapping("/category/{id}")
-    public Optional<List<ProductDAL>> getByCategory(@PathVariable("id") int categoryId) {
-        return productService.getByCategory((categoryId));
+    public ResponseEntity<List<ProductDAL>> getByCategory(@PathVariable("id") int categoryId) {
+        return productService.getByCategory((categoryId))
+                .map(products -> new ResponseEntity<>(products, HttpStatus.OK))
+                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
     @PostMapping()
-    public ProductDAL create(@RequestBody ProductDAL product) {
-        return productService.create(product);
+    public ResponseEntity<ProductDAL> create(@RequestBody ProductDAL product) {
+        return new ResponseEntity<>(productService.create(product), HttpStatus.CREATED);
     }
     @DeleteMapping("/{id}")
-    public boolean delete(@PathVariable("id") int productId) {
-        return productService.delete(productId);
+    public ResponseEntity<Object> delete(@PathVariable("id") int productId) {
+        if (productService.delete(productId)) return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }
