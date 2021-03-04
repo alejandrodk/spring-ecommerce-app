@@ -7,7 +7,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 
-@Mapper(componentModel = "spring", uses = { ProductDalMapper.class })
+@Mapper(componentModel = "spring")
 public interface PurchaseItemDalMapper {
     @Mappings({
             @Mapping(source = "status", target = "active")
