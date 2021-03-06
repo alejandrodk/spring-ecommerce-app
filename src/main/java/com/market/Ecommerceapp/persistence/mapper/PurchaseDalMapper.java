@@ -8,7 +8,6 @@ import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 
 import java.util.List;
-
 @Mapper(componentModel = "spring", uses = { PurchaseItemDalMapper.class })
 public interface PurchaseDalMapper {
 
