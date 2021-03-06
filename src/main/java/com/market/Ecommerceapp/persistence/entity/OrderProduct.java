@@ -30,6 +30,7 @@ public class OrderProduct {
     private BigDecimal total;
 
     @ManyToOne
+    @MapsId("orderId")
     @JoinColumn(name = "id_compra", insertable = false, updatable = false)
     private Order order;
 

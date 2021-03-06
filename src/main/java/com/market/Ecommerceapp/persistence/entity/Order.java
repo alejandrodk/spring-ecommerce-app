@@ -37,6 +37,6 @@ public class Order {
     @JoinColumn(name = "id_cliente", insertable = false, updatable = false)
     private Client client;
 
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "order", cascade = { CascadeType.ALL })
     private List<OrderProduct> products;
 }
