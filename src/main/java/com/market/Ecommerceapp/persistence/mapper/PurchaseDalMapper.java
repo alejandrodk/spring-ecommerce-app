@@ -7,6 +7,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring", uses = { PurchaseItemDalMapper.class })
 public interface PurchaseDalMapper {
 
@@ -17,6 +19,8 @@ public interface PurchaseDalMapper {
             @Mapping(source = "products", target = "item"),
     })
     PurchaseDAL toPurchaseDAL(Order order);
+
+    List<PurchaseDAL> toPurchasesDAL(List<Order> orders);
 
     @InheritInverseConfiguration
     @Mapping(target = "client", ignore = true)
