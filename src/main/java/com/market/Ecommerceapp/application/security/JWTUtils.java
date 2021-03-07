@@ -4,9 +4,11 @@ import com.market.Ecommerceapp.utils.SecurityConstants;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
+@Component
 public class JWTUtils {
     public String generateToken(UserDetails userDetails){
         return Jwts.builder()
