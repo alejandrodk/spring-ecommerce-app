@@ -21,9 +21,7 @@ public class JWTUtils {
     }
 
     public boolean validateToken(String token, UserDetails userDetails) {
-        // TODO: Refactor
-        String username = AuthHelpers.extractUsername(token);
-        return userDetails.getUsername().equals(username) && !AuthHelpers.isTokenExpired(token);
+        return AuthHelpers.isValidUsername(token, userDetails) && !AuthHelpers.isTokenExpired(token);
     }
 
 }
