@@ -1,5 +1,6 @@
 package com.market.Ecommerceapp.domain.service;
 
+import com.market.Ecommerceapp.utils.SecurityConstants;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -13,6 +14,6 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return new User("root", "{noop}password", new ArrayList<>());
+        return new User(SecurityConstants.FAKE_USER, SecurityConstants.FAKE_PASSWORD, new ArrayList<>());
     }
 }
