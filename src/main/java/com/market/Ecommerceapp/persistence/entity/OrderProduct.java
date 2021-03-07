@@ -11,10 +11,10 @@ import java.math.BigDecimal;
 @Entity
 @Table(name = "compras_productos")
 public class OrderProduct {
-    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Id
     @Column(name = "id_compra")
     private Integer orderId;
 
