@@ -1,5 +1,6 @@
 package com.market.Ecommerceapp.application.security;
 
+import com.market.Ecommerceapp.domain.helpers.AuthHelpers;
 import com.market.Ecommerceapp.utils.SecurityConstants;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -17,6 +18,12 @@ public class JWTUtils {
                 .setExpiration(new Date(SecurityConstants.JWT_EXPIRATION))
                 .signWith(SignatureAlgorithm.HS256, SecurityConstants.JWT_SECRET)
                 .compact();
+    }
+
+    public boolean validateToken(String token, UserDetails userDetails) {
+        // TODO: Refactor
+        String username = AuthHelpers.extractUsername(token);
+        return userDetails.getUsername().equals(username) && !AuthHelpers.isTokenExpired(token);
     }
 
 }
